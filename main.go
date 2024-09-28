@@ -20,10 +20,15 @@ func run_editor() {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	print_message(0, 0, termbox.ColorDefault, termbox.ColorDefault, "First time trying a text editor")
-	termbox.Flush()
-	termbox.PollEvent()
-	termbox.Close()
+	for {
+		print_message(0, 0, termbox.ColorDefault, termbox.ColorDefault, "First time trying a text editor")
+		termbox.Flush()
+		event := termbox.PollEvent()
+		if event.Type == termbox.EventKey && event.Key == termbox.KeyEsc {
+			termbox.Close()
+			break
+		}
+	}
 }
 func main() {
 	run_editor()
